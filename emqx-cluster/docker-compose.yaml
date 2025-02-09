@@ -1,0 +1,34 @@
+services:
+  emqx1:
+    image: emqx:5.8
+    container_name: emqx1
+    environment:
+      - "EMQX_NODE__COOKIE=some-secret-cookie"
+      - "EMQX_CLUSTER__DISCOVERY_STRATEGY=dns"
+      - "EMQX_CLUSTER__DNS__NAME=emqx.io"
+    networks:
+      emqx-net:
+        aliases:
+          - emqx.io
+    ports:
+      - "1883:1883"
+      - "8083:8083"
+      - "18083:18083"
+  emqx2:
+    image: emqx:5.8
+    container_name: emqx2
+    environment:
+      - "EMQX_NODE__COOKIE=some-secret-cookie"
+      - "EMQX_CLUSTER__DISCOVERY_STRATEGY=dns"
+      - "EMQX_CLUSTER__DNS__NAME=emqx.io"
+    networks:
+      emqx-net:
+        aliases:
+          - emqx.io
+    ports:
+      - "1884:1883"
+      - "8084:8083"
+
+networks:
+  emqx-net:
+    driver: bridge
